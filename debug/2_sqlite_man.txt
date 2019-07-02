@@ -1,0 +1,60 @@
+import sqlite3
+
+db = sqlite3.connect('../db.sqlite3')
+
+cursor = db.cursor()
+cursor.execute(''' select max(id) from home_sursa ''')
+row = cursor.fetchone() #retrieve the first row
+print row[0]
+
+#read----------------------------------------------------------------------
+cursor.execute(''' select * from home_sursa ''')
+
+#all_rows = cursor.fetchall()
+#for row in all_rows:
+#    # row[0] returns the first column in the query (name), row[1] returns email column.
+#    print('{0} : {1}, {2}'.format(row[0], row[1], row[2]))
+
+for row in cursor:
+    # row[0] returns the first column in the query (name), row[1] returns email column.
+    print('{0} : {1}, {2}'.format(row[0], row[1], row[2]))
+#--------------------------------------------------------------------------
+
+#write---------------------------------------------------------------------
+#id=4
+#nume="Sursa4"
+#link="http://somewhere3"
+#rss="http://somewhere3/rss"
+
+#cursor.execute('''INSERT INTO home_sursa(id,nume,link,rss) VALUES(?,?,?,?)''', (id,nume,link,rss))
+
+#cursor.execute('''INSERT INTO home_sursa(id,nume,link,rss) VALUES(:id,:nume, :link, :rss)''',
+#{'id':id, 'nume':nume, 'link':link, 'rss':rss})
+
+#news = [(5,"Sursa5","http://somewhere5" ,"http://somewhere5/rss" ),
+#	(6,"Sursa6","http://somewhere5" ,"http://somewhere5/rss" ),
+#	(7,"Sursa7","http://somewhere5" ,"http://somewhere5/rss" )]
+#cursor.executemany('INSERT INTO home_sursa(id, nume, link, rss) VALUES(?,?,?,?)',news)
+
+#db.commit()
+#print('line inserted')
+#id = cursor.lastrowid
+#print('Last row id: %d' % id)
+#---------------------------------------------------------------------------
+
+db.close()
+
+
+#.help
+#insert into home_sursa values(1,'sursa1','http://somewhere',"http://somewhere/rss");
+
+.mode csv
+.output t.csv
+select * from table;
+
+.separator ,
+.import t.csv table
+
+#----------------------------------------------------------------------------
+#select count of distinct items 
+select city, count(city) from autosearch_city group by city;

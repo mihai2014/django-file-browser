@@ -1,0 +1,56 @@
+{% extends 'file_browser/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<style></style>
+
+
+    <div class="container">
+
+    <div class="table-responsive-sm table-sm">          
+    <table class="table table-bordered table-striped table-hover">
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+	  <th>Last modified</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      {% for item in data %}     
+
+        <tr>
+          <td>
+             <a href="{{ item.href }}">
+                 {% if item.type == 'D' %}
+                     <img src="{% static '/file_browser/img/folder.png' %}" height="30" alt="directory">
+                 {% else %}
+                     <img src="{% static '/file_browser/img/file.png' %}" height="30" alt="file">
+                 {% endif %}
+              </a>
+              <a href="{{ item.href }}">{{ item.name }}</a>
+  	  </td>
+          <td>
+              {{item.size}}
+  	  </td>
+	  <td>
+              {{ item.last_modified }}		  
+	  </td>	  
+        </tr>
+
+      {% endfor %}
+
+    </tbody>
+
+    </table>
+    </div>	  
+
+    </div>
+
+
+{% endblock %}  

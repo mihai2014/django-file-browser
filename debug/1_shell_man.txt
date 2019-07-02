@@ -1,0 +1,163 @@
+# man: acesing data matrix in template:
+# [ { 'key':'value', ... },
+#   { ...                },
+#     ...
+#   { ...                }]
+#
+# item.0.key
+
+
+
+$ ./manage.py shell < myscript.py
+or
+$ ./manage.py shell
+...
+>>> execfile('myscript.py')
+
+#string to json
+json_id = json.loads(r.content)
+#json to string
+json_id_str = json.dumps(json_id)
+
+sqlite3 dbname
+.help
+insert into pret_magazin("nume") values("Penny");
+#insert into table pret_preturi("","","","","")
+
+
+python manage.py shell
+from pret.models import Articol, Magazin, Preturi, Um
+Articol.objects.all()
+a=Articol(nume="Penny")
+a.save()
+
+u=Um.objects.get(pk=1)
+u.delete()
+u=Um(nume="Buc")
+u.save()
+u=Um(nume="Kg")
+u.save()
+u=Um(nume="-")
+u.save()
+
+>>> from pret.models import Um
+>>> u=Um(nume="Buc")
+>>> u.save()
+>>> u=Um(nume="Kg")
+>>> u.save()
+>>> u=Um(nume="l")
+>>> u.save()
+>>> u=Um(nume="m")
+>>> u.save()
+>>> u=Um(nume="cm")
+>>> u.save()
+>>> u=Um(nume="inch")
+>>> u.save()
+>>> Um.objects.all()
+[<Um: Buc>, <Um: Kg>, <Um: l>, <Um: m>, <Um: cm>, <Um: inch>]
+>>> Um.objects.all()[0].id
+1
+
+a = Articol.objects.get(nume='Assos')
+
+a = Articol.objects.get(pk=11)
+m = Magazin.objects.get(pk=5)
+u = Um.objects.get(pk=2)
+p = Preturi(articol=a,magazin=m,pret=15,um=u,obs='super',user='anonymus',abstime=1435216759.0)
+
+from django.contrib.auth.models import User
+#username password email first_name last_name
+user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+user.last_name = 'Lennon'
+user.save()
+
+user = User.objects.create_user(username = 'pop', first_name = "popescu", last_name = "marin", email = 'pop@yahoo.com',password = 'poppassword')
+user = User.objects.create_user(username = 'mihai', first_name = "mihai", last_name = "c", email = 'mihai_35@ymail.com',password = 'mihaipassword')
+
+python manage.py createsuperuser --username=joe --email=joe@example.com
+
+u = User.objects.get(username='john')
+u.set_password('new password')
+u.is_superuser = True
+u.save()
+
+#max id (last rec)
+a = Articol.objects.all().order_by("-id")[0]
+a.delete()
+
+from blog2.models import Post2
+Post2.objects.all()
+from django.contrib.auth.models import User
+User.objects.all()
+me = User.objects.get(username='user1')
+Post2.objects.create(author=me, title='Sample title', text='Test')
+Post2.objects.filter(author=me)
+Post2.objects.filter(title__contains='title')
+
+post = Post2.objects.get(title="post2")
+post.publish()
+from django.utils import timezone
+Post2.objects.filter(published_date__lte=timezone.now())
+
+p = Post2(author=me, title='new post', text='another post')
+p.id
+p.save()
+p.id
+
+Post2.objects.order_by('created_date')
+Post2.objects.order_by('-created_date')
+Post2.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+
+exit()
+
+
+---------------------------------------------------------------------------------------------
+defining custom management commands (for shell)
+app
+    management/
+        __init__.py
+        commands/
+            __init__.py
+            _private.py
+            closepoll.py
+
+....................................................
+from django.core.management.base import BaseCommand
+
+from forms.models import Table1
+
+class Command(BaseCommand):
+    help = 'generate js'
+
+    def add_arguments(self, parser):
+        parser.add_argument('app', nargs='+', type=str)
+        parser.add_argument('model', nargs='+', type=str)
+        #parser.add_argument('model', nargs='+', type=int)
+
+    def handle(self, *args, **options):
+        print "generate js"
+
+        app = options['app']
+        model = options['model']
+......................................................
+
+defining custom templatetags and filters (for templates)
+
+
+app/
+    __init__.py
+    models.py
+    templatetags/
+        __init__.py
+        filter.py
+    views.py
+
+from django import template
+register = template.Library()
+
+@register.filter
+def bootstrap_form(element, args):
+    print args
+
+{% load filter %}
+{{ var | filter }}

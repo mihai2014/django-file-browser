@@ -1,0 +1,36 @@
+{% extends 'file_browser/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+    <div class="container">
+
+    {% for item in data %}
+
+        <div class="row" {% if item.color == '1' %}style="background-color: lightblue;";{% endif %}  >
+           
+	  <div class="col-sm-6">	
+               <a href="{{ item.href }}">
+                   {% if item.type == 'D' %}
+	               <img src="{% static '/file_browser/img/folder.png' %}" height="30" alt="directory">
+                   {% else %}
+                       <img src="{% static '/file_browser/img/file.png' %}" height="30" alt="file">
+                   {% endif %}
+                </a>
+	   	
+                <a href="{{ item.href }}">{{ item.name }}</a>
+           </div>
+
+           <div class="col-sm-6">
+               {{item.info}}
+           </div>
+  
+
+        </div>
+
+  {% endfor %}
+
+  </div>
+
+{% endblock %}  

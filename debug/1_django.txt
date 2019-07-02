@@ -1,0 +1,36 @@
+django-admin startproject probe2
+python manage.py startapp mypage
+
+-probe2/settings.py : 	
+
+INSTALLED_APPS ... 'mypage'
+
+-probe2/urls.py : 	
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('mypage/', include('mypage.urls')),
+]
+
+-mypage/urls.py : 
+
+from django.urls import path
+
+from . import views
+
+app_name = 'mypage'
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+
+-mypage/views.py
+
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the mypage index.")
+
+python manage.py migrate

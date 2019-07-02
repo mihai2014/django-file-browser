@@ -1,0 +1,28 @@
+os.stat_result(
+st_mode=33279, 
+st_ino=43805114, 
+st_dev=64770, 
+st_nlink=1, 
+st_uid=1000, 
+st_gid=1000, 
+st_size=87, 
+st_atime=1561837828, 
+st_mtime=1525254102, 
+st_ctime=1557029100)
+
+
+stat.ST_ATIME
+
+    Time of last access.
+
+stat.ST_MTIME
+
+    Time of last modification.
+
+stat.ST_CTIME
+
+    The “ctime” as reported by the operating system. On some systems (like Unix) is the time of the last metadata change, and, on others (like Windows), is the creation time (see platform documentation for details).
+
+
+time.struct_time(tm_year=2019, tm_mon=6, tm_mday=29, tm_hour=19, tm_min=50, tm_sec=11, tm_wday=5, tm_yday=180, tm_isdst=0)
+

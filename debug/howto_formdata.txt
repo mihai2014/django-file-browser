@@ -1,0 +1,20 @@
+sending data structure:
+
+
+CLIENT==========================================
+
+var fdData = new FormData();
+
+var f = document.getElementById("foto").files[0];
+if (f != null) 
+
+    fdData.append("fileToUpload", f);
+    
+json_str = JSON.stringify(json);
+
+    fdData.append("json",json_str);
+
+SERVER===========================================
+
+file = request.FILES['fileToUpload']
+jsonStr = request.POST['json']
